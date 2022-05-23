@@ -1,0 +1,124 @@
+-- Display all the employees where SAL between 2500 and 5000 (inclusive of both).
+select * from emp
+where sal between 2500 and 5000;
+output=>
+7839	KING	MANAGER	1991-11-17	5000.00		10
+7698	BLAKE	CLERK	1981-05-01	2850.00		30
+7566	JONES	CLERK	1981-04-02	2975.00		20
+
+
+--  Display all the ENAMEs in descending order of ENAME.
+select ename from emp 
+order by ename desc;
+MARTIN
+KING
+JONES
+CLARK
+BLAKE
+ALLEN
+
+
+-- Display all the JOBs in lowercase.
+select lower(job) from emp;
+manager
+clerk
+manager
+clerk
+salesman
+salesman
+
+-- Display the ENAMEs and the lengths of the ENAMEs.
+select ename , length(ename) from emp;
+KING	4
+BLAKE	5
+CLARK	5
+JONES	5
+MARTIN	6
+ALLEN	5
+
+
+
+
+
+-- Display the DNAMEs and the ENAMEs who belong to that DNAME.
+select dept.dname , emp.ename from emp, dept
+where dept.deptno = emp.deptno ;
+ACCOUNTING	KING
+SALES	        BLAKE
+ACCOUNTING	CLARK
+RESEARCH	JONES
+SALES		MARTIN
+SALES		ALLEN
+
+
+
+
+-- Display the position at which the string ‘AR’ occurs in the ename.
+select locate('AR',ename) from emp;
+0
+0
+3
+0
+2
+0
+
+
+-- 10. Display the HRA for each employee given that HRA is 20% of SAL.
+select ename ,sal*0.2 'HRA' from emp ;
+KING	1000.00
+BLAKE	570.00
+CLARK	490.00
+JONES	595.00
+MARTIN	250.00
+ALLEN	320.00
+
+============================================================================================
+STRING
+
+
+create table tempp(
+string1 varchar(100),
+string2 varchar(100),
+msg varchar(100));
+
+drop table tempp;
+delimiter //
+create procedure PROC1(msg1 varchar(100),msg2 varchar(100))
+begin
+declare mg varchar(100);
+declare n int;
+select locate(msg1,msg2) into n;
+if n> 0 then 
+insert  into tempp values(msg1,msg2,'String1 exists in String2');
+else 
+insert  into tempp values(msg1,msg2,'String1  does not exists in String2');
+end if ;
+select *from tempp;
+end; //
+delimiter ;
+
+call PROC1('dac','cdac');
+
+
+dac	cdac	String1 exists in String2
+
+
+============================================================================================
+  Trangle 
+delimiter //
+ create function FUNC1(a int  , b  int , c int )
+ returns varchar(50) 
+ deterministic
+ begin 
+ if(a+b>c and b+c> a and c+a> b) then 
+ return 'TRUE' ;
+ else 
+ return 'FALSE';
+ end if;
+ end ; //
+ delimiter ;
+ select func1(1,3,5) from dual;
+
+FALSE
+
+=========================================================================================
